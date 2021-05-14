@@ -12,12 +12,14 @@ function showError(input, message) {
 }
 
 function showSuccess(input) {
-    const fornControl = input.parentElement;
-    fornControl.calssName = 'form-control success';
+    const formControl = input.parentElement;
+    formControl.className = 'form-control success';
 }
 
-function isValidEmail(express) {
-    return false;
+function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log(email.value, re.test(String(email.value).toLowerCase()));
+    return re.test(String(email.value).toLowerCase());
 }
 
 form.addEventListener('submit', function(event) {
@@ -30,7 +32,7 @@ form.addEventListener('submit', function(event) {
     }
 
     if (email.value != '') {
-        if (isValidEmail(email)) {
+        if (validateEmail(email)) {
             showSuccess(email);
         } else {
             showError(email, 'Give a Valid Email Format')
@@ -44,10 +46,10 @@ form.addEventListener('submit', function(event) {
         showError(password, 'Password is Required');
     }
     if (password2.value != '') {
-        if (password === password2) {
+        if (password.value === password2.value) {
             showSuccess(password2);
         } else {
-            showError(password2, 'Password doesn\'t match is Required ');
+            showError(password2, 'Password doesn\'t match');
         }
     } else {
         showError(password2, 'Password confirm is Required ');
